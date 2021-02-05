@@ -13,4 +13,4 @@ let JobExperience = new Schema({
     }
 })
 
-module.exports = mongoose.model("jobExperience", JobExperience)
+module.exports = mongoose.model("JobExperience", JobExperience)

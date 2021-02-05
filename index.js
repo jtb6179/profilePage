@@ -1,27 +1,38 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+require('dotenv').config();
 const cors = require('cors')
 const app = express()
 const apiPort = 4000
+const uri = process.env.ATLAS_URI 
 const mongoose = require('mongoose');
-// const profileRoutes = express.Router()
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+})
 const Project = require('./models/project')
 const JobsExperience = require('./models/jobExperience')
+// const profileRoutes = express.Router()
+// const Project = mongoose.model('Projects')
+// const JobsExperience = mongoose.model('JobExperience')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.use(bodyParser.json())
-// app.use('/profile', profileRoutes)
 app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/profile', {
-    useNewUrlParser: true
-})
 
 const connection = mongoose.connection;
 
-connection.once('open', function(){
+connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
+
+const profileRoutes = require('./routes/projects')
+const jobRoutes = require('./routes/jobExperience')
+
+app.use('/jobsExperience', jobRoutes)
+app.use('/profile', profileRoutes)
 
 app.get('/projects', (req, res) => {
     Project.find(function(err, project) {
