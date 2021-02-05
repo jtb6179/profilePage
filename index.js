@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 require('dotenv').config();
 const cors = require('cors')
 const app = express()
-const apiPort = 4000
+const apiPort = 5000
 const uri = process.env.ATLAS_URI 
 const mongoose = require('mongoose');
 mongoose.connect(uri, {
@@ -34,65 +34,65 @@ const jobRoutes = require('./routes/jobExperience')
 app.use('/jobsExperience', jobRoutes)
 app.use('/profile', profileRoutes)
 
-app.get('/projects', (req, res) => {
-    Project.find(function(err, project) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(project);
-        }
-    });
-});
+// app.get('/projects', (req, res) => {
+//     Project.find(function(err, project) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             res.json(project);
+//         }
+//     });
+// });
 
-app.get("/jobsExperience", (req, res) => {
-    JobsExperience.find(function(err, jobExperience) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(jobExperience);
-        }
-    });
-});
+// app.get("/jobsExperience", (req, res) => {
+//     JobsExperience.find(function(err, jobExperience) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             res.json(jobExperience);
+//         }
+//     });
+// });
 
-app.get( "/jobsExperience/:id", (req, res) => {
-    const id = req.params.id;
-    JobsExperience.findById(id, function(err, jobExperience) {
-        res.json(jobExperience);
-    });
-});
+// app.get( "/jobsExperience/:id", (req, res) => {
+//     const id = req.params.id;
+//     JobsExperience.findById(id, function(err, jobExperience) {
+//         res.json(jobExperience);
+//     });
+// });
 
-app.get("/projects/:id", (req, res) => {
-    const id = req.params.id;
-    Project.findById(id, (err, project) => {
-        res.json(project);
-    });
-});
+// app.get("/projects/:id", (req, res) => {
+//     const id = req.params.id;
+//     Project.findById(id, (err, project) => {
+//         res.json(project);
+//     });
+// });
 
-app.post('/addProjects', (req, res) => {
-    const project = new Project(req.body);
-    project
-        .save()
-            .then( (proj) => {
-                res.json(proj)
-                res.status(200).json({'project': 'project added successfully'});
-            })
-            .catch(err => {
-                res.status(500).send('adding new project failed');
-            });
-        }); 
+// app.post('/addProjects', (req, res) => {
+//     const project = new Project(req.body);
+//     project
+//         .save()
+//             .then( (proj) => {
+//                 res.json(proj)
+//                 res.status(200).json({'project': 'project added successfully'});
+//             })
+//             .catch(err => {
+//                 res.status(500).send('adding new project failed');
+//             });
+//         }); 
 
-app.post('/addJobExperience', (req, res) => {
-    let jobExperience = new JobsExperience(req.body);
-    jobExperience
-        .save()
-            .then((jobExp) => {
-                res.json(jobExp)
-                res.status(200).json({'jobExperience': 'jobExperience added successfully'});
-                })
-                .catch(err => {
-                    res.status(400).send('adding new jobExperience failed');
-                });
-            });
+// app.post('/addJobExperience', (req, res) => {
+//     let jobExperience = new JobsExperience(req.body);
+//     jobExperience
+//         .save()
+//             .then((jobExp) => {
+//                 res.json(jobExp)
+//                 res.status(200).json({'jobExperience': 'jobExperience added successfully'});
+//                 })
+//                 .catch(err => {
+//                     res.status(400).send('adding new jobExperience failed');
+//                 });
+//             });
 
 // app.post('/projects/update/:id', (req, res) => {
 //     Project.findById(req.params.id, function(err, project) {
